@@ -25,7 +25,7 @@ public class SendLateMsgTask {
      * 发送迟到信息
      * @return
      */
-    @Scheduled(cron = "0 0/30 10-19 * * ?")
+//    @Scheduled(cron = "0 0/30 10-19 * * ?")
     public AjaxResult sendLateMsg(){
         SendMsgRes sendMsgRes = attendanceService.sendLateMsg();
 
