@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.syx.system.mapper.AttendanceMapper">
+
+  <!-- 查询迟到信息-->
+  <select id="getMsgLog" resultType="com.syx.core.domains.WMsgLog">
+    SELECT 信息内容 AS msgData,工号 AS pernr,日期 AS date
+    FROM dbo.WMsgLog
+    WHERE 业务类型 = '考勤提醒' AND 日期 = CONVERT(DATE,GETDATE()) AND 发送时间 is NULL
+  </select>
+
+  <update id="setSendMsgTime">
+    update WMsgLog set 发送时间 = #{timestampNow} where 业务类型 = '考勤提醒' AND 工号 = #{pernr} AND 日期 = CONVERT(DATE,GETDATE())
+  </update>
+
+</mapper>

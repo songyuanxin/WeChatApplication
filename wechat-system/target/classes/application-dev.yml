@@ -1,0 +1,28 @@
+#端口
+server:
+  port: 9001
+#spring的配置
+spring:
+  #redis连接配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+#    password:
+
+  #数据源的配置
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://10.8.1.3;databaseName=info;
+    username: jzjcomm
+    password: 20050311jzjcomm
+
+#mybatisplus的配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+
