@@ -26,7 +26,7 @@ public class EftsExcelController {
      */
     @PostMapping(path = "/uploadTempFile")
     public AjaxResult uploadTempFile(){
-        
+        String file = "";
         File excel = new File("D:\\test\\英克发票回传数据同步报税系统.xlsx");
         SendMsgRes sendMsgRes = eftsExcelService.sendEftsMsg(excel);
 
