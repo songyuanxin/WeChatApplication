@@ -28,6 +28,7 @@ public class SendLateMsgTask {
     @Scheduled(cron = "0 0/30 10-19 * * ?")
     public AjaxResult sendLateMsg(){
         SendMsgRes sendMsgRes = attendanceService.sendLateMsg();
+
         if (sendMsgRes.getErrcode() != 0){
             return AjaxResult.error("发送信息失败",sendMsgRes.getErrmsg());
         }

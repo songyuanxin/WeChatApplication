@@ -8,6 +8,9 @@ import com.syx.core.domains.SendMsgRes;
  **/
 public interface AttendanceService {
 
+    /**
+     * 发送迟到提醒
+     * @return
+     */
     SendMsgRes sendLateMsg();
-
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -72,7 +73,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                 //从redis中获取token
                 String access_token = redisTemplate.opsForValue().get("access_token").toString();
                 //调用企业微信接口发送消息
-                SendMsgRes sendMsgRes1 = sendMsg(sendMsgData, access_token);
+                SendMsgRes sendMsgRes1 = sendLateMsg(sendMsgData, access_token);
                 //判断提醒消息是否发送成功，若发送成功则将发送时间写入数据库
                 int result = setSendMsgTime(lateMsg.getPernr(), sendMsgRes);
                 if (result != 1){
@@ -85,7 +86,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                 //若token有效，则直接调用企业微信接口发送消息
                 String access_token = redisTemplate.opsForValue().get("access_token").toString();
                 //调用企业微信接口发送消息
-                SendMsgRes sendMsgRes1 = sendMsg(sendMsgData, access_token);
+                SendMsgRes sendMsgRes1 = sendLateMsg(sendMsgData, access_token);
                 //判断提醒消息是否发送成功，若发送成功则将发送时间写入数据库
                 int result = setSendMsgTime(lateMsg.getPernr(), sendMsgRes);
                 if (result != 1){
@@ -130,7 +131,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void getAccessToken(){
         AccessTokenRes accessTokenRes = new AccessTokenRes();
         try {
-            accessTokenRes = wxServiceImpl.getAccessToken();
+            accessTokenRes = wxServiceImpl.getAttAccessToken();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,16 +145,14 @@ public class AttendanceServiceImpl implements AttendanceService {
      * @param accessToken
      * @return
      */
-    public SendMsgRes sendMsg(SendMsgData sendMsgData,String accessToken){
+    public SendMsgRes sendLateMsg(SendMsgData sendMsgData,String accessToken){
         SendMsgRes sendMsgRes = null;
         try {
-            sendMsgRes = wxServiceImpl.sendMsg(sendMsgData, accessToken);
+            sendMsgRes = wxServiceImpl.sendLateMsg(sendMsgData, accessToken);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return sendMsgRes;
     }
-
-
 
 }
