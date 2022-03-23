@@ -3,11 +3,15 @@ package com.syx.system.controller;
 import com.syx.core.domains.AjaxResult;
 import com.syx.core.domains.SendMsgRes;
 import com.syx.system.service.EftsExcelService;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
 
 /**
  * @author 宋远欣
@@ -21,13 +25,14 @@ public class EftsExcelController {
     private EftsExcelService eftsExcelService;
 
     /**
-     * 发送迟到信息
+     *
      * @return
      */
     @PostMapping(path = "/uploadTempFile")
     public AjaxResult uploadTempFile(){
 
         File excel = new File("D:\\test\\英克发票回传数据同步报税系统.xlsx");
+
         SendMsgRes sendMsgRes = eftsExcelService.sendEftsMsg(excel);
 
         if (sendMsgRes.getErrcode() != 0){
